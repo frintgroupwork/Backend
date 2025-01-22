@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\Controller;
 use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\Student;
+use App\Helpers\ApiResponseHelper;
+
 
 
 
@@ -42,10 +44,13 @@ class FavoriteApiController extends Controller
         // Get the user's favorites (without any unnecessary relationships)
         $favorites = $user->favorites()->get();
 
-        return response()->json([
-            'message' => 'Favorites retrieved successfully',
-            'favorites' => $favorites,
-        ]);
+        // return response()->json([
+        //     'message' => 'Favorites retrieved successfully',
+        //     'favorites' => $favorites,
+        // ]);
+
+        return ApiResponseHelper::success($favorites);
+
     }
 
 

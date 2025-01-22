@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Experience; // Import the Experience model
 use App\Http\Resources\ExperienceResource; // Import the ExperienceResource
+use App\Helpers\ApiResponseHelper;
+
 
 
 class AddExperienceApiController extends Controller
@@ -24,7 +26,9 @@ class AddExperienceApiController extends Controller
              $experiences = Experience::all();
          }
  
-         return ExperienceResource::collection($experiences);
+        //  return ExperienceResource::collection($experiences);
+         return ApiResponseHelper::success($experiences);
+
      }
  
      /**
