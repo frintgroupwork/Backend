@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Api\Controller;
 use App\Models\BlogType;
 use Illuminate\Http\Request;
+use App\Helpers\ApiResponseHelper;
+
 
 class BlogTypeApiController extends Controller
 {
@@ -16,7 +18,9 @@ class BlogTypeApiController extends Controller
     public function index()
     {
         $blogtypes = BlogType::all();
-        return response()->json($blogtypes);
+        return ApiResponseHelper::success($blogtypes);
+
+        // return response()->json($blogtypes);
     }
 
     /**

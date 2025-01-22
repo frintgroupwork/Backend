@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\Controller;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 use App\Http\Resources\BlogResource;
+use App\Helpers\ApiResponseHelper;
+
 
 class BlogApiController extends Controller
 {
@@ -17,10 +19,20 @@ class BlogApiController extends Controller
     public function index()
     {
         // Retrieve blogs with 'blogType' relationship and eager load 'favoritedBy' for the current user
-        $blogs = Blog::with('blogType')->get();
-        
-        // Return the collection of blogs with the favorited_by_current_user attribute appended
-        return BlogResource::collection($blogs);
+        // $blogs = Blog::with('blogType')->get();
+        // Paginate blogs with 9 per page
+        $blogs = Blog::with('blogType')->paginate(9);
+
+        $data = [
+            'current_page' => $blogs->currentPage(),
+            'last_page' => $blogs->lastPage(),
+            'per_page' => $blogs->perPage(),
+            'total' => $blogs->total(),
+            'blogs' => BlogResource::collection($blogs)->resolve(),
+        ];
+
+        return ApiResponseHelper::success($data);
+
     }
 
     /**
@@ -55,6 +67,7 @@ class BlogApiController extends Controller
         $blog = Blog::findOrFail($id);
 
         return response()->json($blog);
+        
     }
 
     /**

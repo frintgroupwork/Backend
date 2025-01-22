@@ -7,6 +7,7 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Http\Resources\ExperienceResource; // Import the ExperienceResource
 use App\Http\Resources\StudentResource; // Import the ExperienceResource
+use App\Helpers\ApiResponseHelper;
 
 
 class StudentsApiController extends Controller
@@ -19,7 +20,9 @@ class StudentsApiController extends Controller
     public function index()
     {
         $students = Student::with('experiences')->get(); // Eager load experiences
-        return StudentResource::collection($students);
+        // return StudentResource::collection($students);
+        return ApiResponseHelper::success($students);
+
     }
 
     /**
