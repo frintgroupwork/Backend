@@ -34,6 +34,23 @@ class Student extends Authenticatable
         'duration',
     ];
 
+    // Automatically hash the password when creating or updating a student
+    protected static function boot()
+    {
+        parent::boot();
+
+        // static::creating(function ($student) {
+        //     if ($student->password) {
+        //         $student->password = bcrypt($student->password);
+        //     }
+        // });
+
+        // static::updating(function ($student) {
+        //     if ($student->isDirty('password')) { // Encrypt only if password is changed
+        //         $student->password = bcrypt($student->password);
+        //     }
+        // });
+    }
     // Ensure the password is always hashed
     public function setPasswordAttribute($value)
     {

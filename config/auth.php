@@ -43,7 +43,7 @@ return [
 
         'api' => [
             'driver' => 'sanctum', // or 'sanctum' if using Laravel Sanctum
-            'provider' => 'users',
+            'provider' => 'students',
             // 'hash' => false,
         ],
     ],
@@ -69,14 +69,11 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Student::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
+
+
 
     /*
     |--------------------------------------------------------------------------

@@ -17,19 +17,23 @@ class AuthController extends Controller
     {
         $student = Student::where('email', $request->email)->first();
 
-        if (!$student || !Hash::check($request->password, $student->password)) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
+        if (!$student) {
+            return response()->json(['message' => 'Student not found'], 404);
         }
 
-        // Generate a Sanctum token
-        $token = $student->createToken('auth_token')->plainTextToken;
+        if (!Hash::check($request->password, $student->password)) {
+            return response()->json(['message' => 'Password mismatch'], 401);
+        }
 
+        // Debugging
+        $token = $student->createToken('auth_token')->plainTextToken;
         return response()->json([
             'message' => 'Login successful',
             'token' => $token,
             'student' => $student,
         ]);
     }
+
 
     /**
      * Handle student logout and revoke the token.

@@ -32,6 +32,20 @@ class StudentCrudController extends CrudController
         CRUD::setValidation(StudentRequest::class);
         CRUD::setFromDb();
 
+         // Add dropdown for gender
+         CRUD::addField([
+            'name' => 'gender',
+            'label' => 'Gender',
+            'type' => 'select_from_array',
+            'options' => [
+                'male' => 'Male',
+                'female' => 'Female',
+                'rather_not_to_say' => 'Rather not say',
+            ],
+            'allows_null' => false, // Set to true if you want to allow no selection
+            'default' => 'male', // Default value for the field
+        ]);
+
         CRUD::addField([
             'name' => 'password',
             'label' => 'Password',
@@ -48,15 +62,7 @@ class StudentCrudController extends CrudController
      * Store the created student.
      * Encrypt the password before saving.
      */
-    public function store()
-    {
-        // Encrypt password before saving to the database
-        $this->crud->setRequest($this->crud->getRequest()->merge([
-            'password' => bcrypt($this->crud->getRequest()->input('password'))
-        ]));
-
-        return parent::store();
-    }
+    
 
     /**
      * The update method automatically handles password encryption.
